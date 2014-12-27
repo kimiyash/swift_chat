@@ -3,3 +3,5 @@
 //
 
 #import <Parse/Parse.h>
+#import "SOMessagingViewController.h"
+#import "SOMessage.h"
