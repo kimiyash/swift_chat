@@ -1,0 +1,11 @@
+*.xcuserdatad
+*.xccheckout
+.DS_Store
+/build
+/ipa
+/Pods
+
+*.swp
+*~
+*_old.storyboard
+*.bak
