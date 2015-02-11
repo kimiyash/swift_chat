@@ -4,8 +4,10 @@
 /build
 /ipa
 /Pods
+/SwiftChat/parse.plist
 
 *.swp
 *~
 *_old.storyboard
 *.bak
+

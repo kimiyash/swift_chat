@@ -8,22 +8,58 @@
 
 import UIKit
 
+let kSwiftChatReceivedPushNotification = "kSwiftChatReceivedPushNotification"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        let id = ""
-        let key = ""
+        let parse = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("parse.plist", ofType:nil)!)
+        let id  = parse?["id"] as String
+        let key = parse?["key"] as String
+        
         Parse.setApplicationId(id, clientKey: key)
 
+        let types : UIUserNotificationType = .Badge | .Alert | .Sound
+        let settings = UIUserNotificationSettings(forTypes: types, categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        UIApplication.sharedApplication().registerForRemoteNotifications()
+        
         return true
     }
-
+    
+    func application(application: UIApplication!, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData!) {
+        println("device Token: \(deviceToken)")
+        let currentInstallation = PFInstallation.currentInstallation();
+        if let deviceTokenData = deviceToken {
+            currentInstallation.setDeviceTokenFromData(deviceTokenData)
+            currentInstallation.saveInBackgroundWithBlock({
+                (success :Bool, error :NSError!) -> Void in
+                if error == nil {
+                    println("Save successful")
+                } else {
+                    let errorString = error.userInfo?["error"] as NSString
+                    println(errorString)
+                }
+            })
+        }
+    }
+    
+    func application(application: UIApplication!, didFailToRegisterForRemoteNotificationsWithError error: NSError!) {
+        println("error: \(error)")
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo:NSDictionary!, fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        println("received notification")
+        //var notification:NSDictionary = userInfo.objectForKey("aps") as NSDictionary
+        NSNotificationCenter.defaultCenter().postNotificationName(kSwiftChatReceivedPushNotification, object: nil)
+        completionHandler(UIBackgroundFetchResult.NewData)
+    }
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -45,7 +81,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 

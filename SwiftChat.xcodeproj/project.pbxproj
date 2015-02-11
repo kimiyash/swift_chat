@@ -13,19 +13,9 @@
 		0266D2241A4E4575001D43EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0266D2221A4E4575001D43EE /* Main.storyboard */; };
 		0266D2261A4E4575001D43EE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0266D2251A4E4575001D43EE /* Images.xcassets */; };
 		0266D2291A4E4575001D43EE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0266D2271A4E4575001D43EE /* LaunchScreen.xib */; };
-		0266D2351A4E4576001D43EE /* SwiftChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266D2341A4E4576001D43EE /* SwiftChatTests.swift */; };
+		0295764D1A8B38E3007BE1C2 /* parse.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0295764C1A8B38E3007BE1C2 /* parse.plist */; };
 		B596970C37FBBDA25010A748 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 562DF72B3A749BB40FA3FBD2 /* libPods.a */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		0266D22F1A4E4576001D43EE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0266D2111A4E4575001D43EE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0266D2181A4E4575001D43EE;
-			remoteInfo = SwiftChat;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0248A52A1A4E5294001A6C61 /* SwiftChat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftChat-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -37,9 +27,9 @@
 		0266D2231A4E4575001D43EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0266D2251A4E4575001D43EE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0266D2281A4E4575001D43EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		0266D22E1A4E4576001D43EE /* SwiftChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0266D2331A4E4576001D43EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0266D2341A4E4576001D43EE /* SwiftChatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftChatTests.swift; sourceTree = "<group>"; };
+		0295764C1A8B38E3007BE1C2 /* parse.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = parse.plist; sourceTree = "<group>"; };
 		5500F1C277A141BCCCAA7572 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		562DF72B3A749BB40FA3FBD2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6900EE8095A781275C4BB71A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -51,13 +41,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B596970C37FBBDA25010A748 /* libPods.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0266D22B1A4E4576001D43EE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +62,6 @@
 			isa = PBXGroup;
 			children = (
 				0266D2191A4E4575001D43EE /* SwiftChat.app */,
-				0266D22E1A4E4576001D43EE /* SwiftChatTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				0266D21D1A4E4575001D43EE /* Info.plist */,
+				0295764C1A8B38E3007BE1C2 /* parse.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -163,24 +146,6 @@
 			productReference = 0266D2191A4E4575001D43EE /* SwiftChat.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0266D22D1A4E4576001D43EE /* SwiftChatTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0266D23B1A4E4576001D43EE /* Build configuration list for PBXNativeTarget "SwiftChatTests" */;
-			buildPhases = (
-				0266D22A1A4E4576001D43EE /* Sources */,
-				0266D22B1A4E4576001D43EE /* Frameworks */,
-				0266D22C1A4E4576001D43EE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0266D2301A4E4576001D43EE /* PBXTargetDependency */,
-			);
-			name = SwiftChatTests;
-			productName = SwiftChatTests;
-			productReference = 0266D22E1A4E4576001D43EE /* SwiftChatTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -192,10 +157,11 @@
 				TargetAttributes = {
 					0266D2181A4E4575001D43EE = {
 						CreatedOnToolsVersion = 6.1.1;
-					};
-					0266D22D1A4E4576001D43EE = {
-						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = 0266D2181A4E4575001D43EE;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -213,7 +179,6 @@
 			projectRoot = "";
 			targets = (
 				0266D2181A4E4575001D43EE /* SwiftChat */,
-				0266D22D1A4E4576001D43EE /* SwiftChatTests */,
 			);
 		};
 /* End PBXProject section */
@@ -223,16 +188,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0295764D1A8B38E3007BE1C2 /* parse.plist in Resources */,
 				0266D2241A4E4575001D43EE /* Main.storyboard in Resources */,
 				0266D2291A4E4575001D43EE /* LaunchScreen.xib in Resources */,
 				0266D2261A4E4575001D43EE /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0266D22C1A4E4576001D43EE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,23 +241,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0266D22A1A4E4576001D43EE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0266D2351A4E4576001D43EE /* SwiftChatTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		0266D2301A4E4576001D43EE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0266D2181A4E4575001D43EE /* SwiftChat */;
-			targetProxy = 0266D22F1A4E4576001D43EE /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		0266D2221A4E4575001D43EE /* Main.storyboard */ = {
@@ -337,7 +280,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -357,7 +301,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				PROVISIONING_PROFILE = "0adf93c0-6795-44fe-9ca5-2e6b0c55d4c4";
+				SDKROOT = iphoneos8.1;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -380,7 +325,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -393,7 +339,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "0adf93c0-6795-44fe-9ca5-2e6b0c55d4c4";
+				SDKROOT = iphoneos8.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -426,40 +374,6 @@
 			};
 			name = Release;
 		};
-		0266D23C1A4E4576001D43EE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SwiftChatTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftChat.app/SwiftChat";
-			};
-			name = Debug;
-		};
-		0266D23D1A4E4576001D43EE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SwiftChatTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftChat.app/SwiftChat";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -477,15 +391,6 @@
 			buildConfigurations = (
 				0266D2391A4E4576001D43EE /* Debug */,
 				0266D23A1A4E4576001D43EE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0266D23B1A4E4576001D43EE /* Build configuration list for PBXNativeTarget "SwiftChatTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0266D23C1A4E4576001D43EE /* Debug */,
-				0266D23D1A4E4576001D43EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

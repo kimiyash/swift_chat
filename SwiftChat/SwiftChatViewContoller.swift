@@ -8,33 +8,34 @@
 
 import UIKit
 
+let kSwiftChatChanelName = "SwiftChat"
+
 class SwiftChatViewContoller: SOMessagingViewController {
+    
     let dataSource = NSMutableArray()
 
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let msg = Message()
-        msg.fromMe = true
-        msg.text = "hoge"
-        msg.type = SOMessageTypeText
-        msg.date = NSDate()
-        self.dataSource.addObject(msg)
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "pullMessage:", name: kSwiftChatReceivedPushNotification, object: nil)
+
+        self.dataSource.addObject(createTextMessage(true, text: "ChatRoom!", date: NSDate()))
     }
     
     override func viewDidAppear(animated: Bool) {
-        // Do any additional setup after loading the view, typically from a nib.
         if PFUser.currentUser() == nil {
-            self.loginOrSignup()
+            self.signup()
         } else {
-            self.loadMessages()
+            self.initialSetup()
         }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     
@@ -58,11 +59,8 @@ class SwiftChatViewContoller: SOMessagingViewController {
             cell.contentInsets = UIEdgeInsetsMake(0, 0, 0, 3.0)
             cell.textView.textColor = UIColor.blackColor()
         }
-        
         cell.userImageView.layer.cornerRadius = self.userImageSize().width/2;
-
     }
-    
 
     override func messageMaxWidth() -> CGFloat {
         return 140
@@ -93,6 +91,7 @@ class SwiftChatViewContoller: SOMessagingViewController {
             (success :Bool, error :NSError!) -> Void in
             if error == nil {
                 println("Send text successful")
+                self.pushNotification(msg.text)
             } else {
                 let errorString = error.userInfo?["error"] as NSString
                 println(errorString)
@@ -102,46 +101,53 @@ class SwiftChatViewContoller: SOMessagingViewController {
         self.sendMessage(msg)
     }
     
-    
     // MARK: - private methods
-    func loginOrSignup() {
-        let loginAlert:UIAlertController = UIAlertController(title: "Sign UP / Loign", message: "Plase sign up or login", preferredStyle: UIAlertControllerStyle.Alert)
+    func signup() {
+        let signupAlert: UIAlertController = UIAlertController(title: "Signup", message: "Plase input your name", preferredStyle: UIAlertControllerStyle.Alert)
         
-        loginAlert.addTextFieldWithConfigurationHandler({
+        signupAlert.addTextFieldWithConfigurationHandler({
             textfield in
-            textfield.placeholder = "Your username"
+            textfield.placeholder = "Your bame"
         })
         
-        loginAlert.addTextFieldWithConfigurationHandler({
-            textfield in
-            textfield.placeholder = "Your Password"
-            textfield.secureTextEntry = true
-        })
-        
-        loginAlert.addAction(UIAlertAction(title: "Login", style: UIAlertActionStyle.Default, handler: {
+        signupAlert.addAction(UIAlertAction(title: "Signup", style: UIAlertActionStyle.Default, handler: {
             alertAction in
-            let textFields = loginAlert.textFields as NSArray?
+            let textFields = signupAlert.textFields as NSArray?
             let usernameTextfield = textFields?.objectAtIndex(0) as UITextField
-            let passwordTextfield = textFields?.objectAtIndex(1) as UITextField
             
             let user = PFUser()
             user.username = usernameTextfield.text
-            user.password = passwordTextfield.text
+            user.password = usernameTextfield.text
             
             user.signUpInBackgroundWithBlock{
                 (success: Bool, error: NSError!) -> Void in
                 if error == nil {
                     println("Sign up successful")
-                    self.loadMessages()
+                    self.initialSetup()
                 } else {
-                    let errorString = error.userInfo?["error"] as NSString
-                    println(errorString)
+                    println(error.userInfo?["error"] as NSString)
                 }
             }
             
         }))
-        
-        self.presentViewController(loginAlert, animated: true, completion: nil)
+        self.presentViewController(signupAlert, animated: true, completion: nil)
+    }
+
+    func pushNotification(msg: String!) {
+        var push = PFPush()
+        push.setChannel(kSwiftChatChanelName)
+        push.setData(["alert": msg])
+        push.sendPush(nil)
+    }
+    
+    func initialSetup() {
+        self.chanelSetup()
+        self.loadMessages()
+    }
+    
+    func chanelSetup() {
+        var error = NSErrorPointer()
+        PFPush.subscribeToChannel(kSwiftChatChanelName, error: error)
     }
     
     func loadMessages() {
@@ -154,13 +160,13 @@ class SwiftChatViewContoller: SOMessagingViewController {
                 }
                 dispatch_async(dispatch_get_main_queue(),{
                     self.refreshMessages()
-                    NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("pollingMessage"), userInfo: nil, repeats: true)
+                    self.pullMessage(nil)
                 })
             }
         }
     }
     
-    func pollingMessage() {
+    func pullMessage(notification: NSNotification?) {
         let findTimelineData = PFQuery(className: "Messages")
         findTimelineData.findObjectsInBackgroundWithBlock{
             (messages :[AnyObject]!, error :NSError!)->Void in
@@ -180,13 +186,21 @@ class SwiftChatViewContoller: SOMessagingViewController {
         }
     }
     
-    func appendDataSource(message :PFObject) {
+    func createTextMessage(fromMe: Bool, text: String, date: NSDate) -> Message {
         let msg = Message()
-        msg.fromMe = PFUser.currentUser().objectId == (message["user"] as PFUser).objectId
-        msg.text = message["text"] as String
+        msg.fromMe = fromMe
+        msg.text = text
         msg.type = SOMessageTypeText
-        msg.date = message.createdAt
-        self.dataSource.addObject(msg)
+        msg.date = date
+        return msg
+    }
+    
+    func appendDataSource(message :PFObject) {
+        self.dataSource.addObject(self.createTextMessage(
+            PFUser.currentUser().objectId == (message["user"] as PFUser).objectId,
+            text: message["text"] as String,
+            date: message.createdAt)
+        )
     }
 
 }
