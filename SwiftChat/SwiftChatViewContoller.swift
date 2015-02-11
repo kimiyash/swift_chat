@@ -13,7 +13,8 @@ let kSwiftChatChanelName = "SwiftChat"
 class SwiftChatViewContoller: SOMessagingViewController {
     
     let dataSource = NSMutableArray()
-
+    let userImage = UIImage(named: "user-icon.jpg")
+    
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
@@ -23,7 +24,7 @@ class SwiftChatViewContoller: SOMessagingViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "pullMessage:", name: kSwiftChatReceivedPushNotification, object: nil)
 
-        self.dataSource.addObject(createTextMessage(true, text: "ChatRoom!", date: NSDate()))
+        self.dataSource.addObject(createTextMessage(true, text: "Welcome!", date: NSDate()))
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -59,9 +60,32 @@ class SwiftChatViewContoller: SOMessagingViewController {
             cell.contentInsets = UIEdgeInsetsMake(0, 0, 0, 3.0)
             cell.textView.textColor = UIColor.blackColor()
         }
+        
         cell.userImageView.layer.cornerRadius = self.userImageSize().width/2;
+        
+        cell.userImageView.autoresizingMask = message.fromMe ? UIViewAutoresizing.FlexibleLeftMargin
+                                                             : UIViewAutoresizing.FlexibleBottomMargin
+        
+        cell.userImage = self.userImage
+        
+        self.generateUsernameLabelForCell(cell)
+    }
+    
+    func generateUsernameLabelForCell(cell: SOMessageCell!) {
+        let labelTag = NSInteger(666)
+        
     }
 
+    override func balloonImageForSending() -> UIImage? {
+        let img = UIImage(named: "bubble_rect_sending.png");
+        return img?.resizableImageWithCapInsets(UIEdgeInsetsMake(3, 3, 24, 11))
+    }
+    
+    override func balloonImageForReceiving() -> UIImage? {
+        let img = UIImage(named: "bubble_rect_receiving.png");
+        return img?.resizableImageWithCapInsets(UIEdgeInsetsMake(3, 11, 24, 3))
+    }
+    
     override func messageMaxWidth() -> CGFloat {
         return 140
     }
@@ -196,8 +220,9 @@ class SwiftChatViewContoller: SOMessagingViewController {
     }
     
     func appendDataSource(message :PFObject) {
+        let user = message["user"] as PFUser
         self.dataSource.addObject(self.createTextMessage(
-            PFUser.currentUser().objectId == (message["user"] as PFUser).objectId,
+            PFUser.currentUser().objectId == user.objectId,
             text: message["text"] as String,
             date: message.createdAt)
         )
